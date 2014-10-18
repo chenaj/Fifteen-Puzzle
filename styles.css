@@ -1,0 +1,72 @@
+/*	Angela Chen
+	CIS435 Project 2
+	Professor Guo
+*/
+
+body {
+	margin:0;
+	padding:0;
+	color: #044774;
+	height: 1000px;
+	font: 20px/1.5 Helvetica,"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	background-image: url('blue.jpg');
+	background-size: cover;
+	height:100%;
+}
+
+table{
+	width:400px;
+    height:400px;
+}
+td{
+	width: 100px;
+	text-align: center;
+}
+
+table, td {
+    border: 2px solid blue;
+	border-color: #ffffff;
+	color: #ffffff;
+	background: #044774;
+	margin-left: auto ;
+	margin-right: auto ;
+	
+}
+
+a, button{
+	margin-left: auto ;
+	margin-right: auto ;
+}
+
+td:hover{
+	background:#0486dd;
+}
+
+#header{
+	background: #044774;
+	margin:0px auto;
+	color: #ffffff;
+	padding:10px;
+}
+
+#wrapper{
+	width:700px;
+	margin:0 auto;
+	background: #ffffff;
+	margin-left: auto ;
+	margin-right: auto ;
+	padding: 25px;
+	min-height:100%;
+	position:relative;
+
+}
+
+#footer {
+	background: #044774;
+	color: #ffffff;
+	padding-top: 10px;
+	height: 60px;
+	border-top: 1px solid #1d1d1d;
+	width:100%;
+}
+
