@@ -1,0 +1,182 @@
+<!--CIS435 Project 2-->
+<!--Angela Chen-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<link rel="stylesheet" href="styles.css">
+		<link rel="shortcut icon" href="puzzle-piece_2a8cff_32.png" />
+		<title>Angela Chen | Fifteen Puzzle</title>
+	</head>
+	<body>
+		<script>
+		var counter=0, seconds = 0, minutes = 0;
+			function newGame(){
+				if(confirm("Are you sure you'd like to start a new game?")==true)
+				{
+					var array = [ ' ','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15'];
+					
+					clearTimeout(t);	//stop previous timer
+					counter=0, seconds = 0, minutes = 0;			//reset all counters and time
+					
+					document.getElementById("time").textContent= "00:00";
+					document.getElementById("moves").innerHTML=0;
+					document.getElementById("message").innerHTML=' ';
+					
+					var table = document.getElementById('game');
+					array=shuffle(array);
+					var arrCounter=0;
+					for (var i=0; i<table.rows.length; i++) {
+						for (var j=0; j<table.rows[i].cells.length; j++){
+							table.rows[i].cells[j].innerHTML=array[arrCounter];
+							arrCounter++;
+						}
+					}
+				}
+			}
+			function shuffle(array){
+				//Fisher-Yates shuffle method
+				for (var i = array.length - 1; i > 0; i--) {
+					var j = Math.floor(Math.random() * (i + 1));
+					var temp = array[i];
+					array[i] = array[j];
+					array[j] = temp;
+				}
+				return array;
+			}
+			function simpleGame(){
+				var array = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14',' ','15'];
+				if(confirm("Are you sure you'd like to start a simple game?")==true)
+				{
+					clearTimeout(t);	//stop previous timer
+					counter=0, seconds = 0, minutes = 0;
+					
+					document.getElementById("time").textContent= "00:00";
+					document.getElementById("moves").innerHTML=0;
+					document.getElementById("message").innerHTML=' ';
+					
+					var table = document.getElementById('game');
+					var arrCounter=0;
+					for (var i=0; i<table.rows.length; i++) {
+						for (var j=0; j<table.rows[i].cells.length; j++){
+							table.rows[i].cells[j].innerHTML=array[arrCounter];
+							arrCounter++;
+						}
+					}
+				}
+			}
+			function moveTile(row,col){
+				//Start timer on first move
+				if(document.getElementById("moves").textContent==="0")
+					timer();
+			
+				//check adjacent tiles
+				var table = document.getElementById('game');
+				document.getElementById("message").innerHTML=' ';
+				if (col+1<=3 && table.rows[row].cells[col+1].innerHTML==' '){
+					table.rows[row].cells[col+1].innerHTML=table.rows[row].cells[col].innerHTML;
+					table.rows[row].cells[col].innerHTML=' ';
+					counters();
+				}
+				else if(col-1>=0 && table.rows[row].cells[col-1].innerHTML==' '){
+					table.rows[row].cells[col-1].innerHTML=table.rows[row].cells[col].innerHTML;
+					table.rows[row].cells[col].innerHTML=' ';
+					counters();
+				}
+				else if(row+1<=3 && table.rows[row+1].cells[col].innerHTML==' '){
+					table.rows[row+1].cells[col].innerHTML=table.rows[row].cells[col].innerHTML;
+					table.rows[row].cells[col].innerHTML=' ';
+					counters();
+				}
+				else if(row-1>=0 && table.rows[row-1].cells[col].innerHTML==' '){
+					table.rows[row-1].cells[col].innerHTML=table.rows[row].cells[col].innerHTML;
+					table.rows[row].cells[col].innerHTML=' ';
+					counters();
+				}
+				else{
+					document.getElementById("message").innerHTML="Invalid move. Try another tile";
+				}
+	
+				if (solved(table))
+				{
+					clearTimeout(t);
+					document.getElementById("message").innerHTML="You Won!";
+					if(alert("Congratulations, you solved the puzzle!")==true)
+						newGame();
+				}
+				
+			}
+			function solved(table){
+				var array = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',' '];
+			
+				var arrCounter=0;
+				for (var i=0; i<table.rows.length; i++) {
+					for (var j=0; j<table.rows[i].cells.length; j++){
+						if (table.rows[i].cells[j].innerHTML!=array[arrCounter])
+							return false;
+						arrCounter++;
+					}
+				}
+				return true;
+			}
+			function counters(){
+				counter+=1;
+				document.getElementById("moves").innerHTML=counter;
+			}
+			function timer(){
+				t = setTimeout(add, 1000);
+			}
+			function add() {
+				seconds++;
+				if (seconds >= 60) {
+					seconds = 0;
+					minutes++;
+				}
+				 document.getElementById("time").textContent= (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+				timer();
+			}
+		</script>
+		<div id='header'>
+			<h2> Fifteen Puzzle Game </h2>
+		</div>    
+		<div id='wrapper'>
+			<p> Click a tile adjacent to the empty spot to slide the cognate tile over. Get the tiles in sequential order row by row to win the game! </p>
+			Time: <a id="time">00:00</a> Moves: <a id="moves">0</a> 
+			<table id='game'>
+			<tr>
+				<td  onclick="moveTile(0,0)"> 13</td>
+				<td  onclick="moveTile(0,1)"> 10</td>
+				<td  onclick="moveTile(0,2)"> 11</td>
+				<td  onclick="moveTile(0,3)"> 6</td>
+			</tr>
+			<tr>
+				<td onclick="moveTile(1,0)"> 5</td>
+				<td  onclick="moveTile(1,1)"> 7</td>
+				<td  onclick="moveTile(1,2)"> 4</td>
+				<td  onclick="moveTile(1,3)"> 8</td>
+			</tr><tr>
+				<td  onclick="moveTile(2,0)"> 1</td>
+				<td  onclick="moveTile(2,1)"> 12</td>
+				<td  onclick="moveTile(2,2)"> 14</td>
+				<td  onclick="moveTile(2,3)"> 9</td>
+			</tr>
+			<tr>
+				<td  onclick="moveTile(3,0)"> 3</td>
+				<td  onclick="moveTile(3,1)"> 15</td>
+				<td  onclick="moveTile(3,2)"> 2</td>
+				<td  onclick="moveTile(3,3)"> </td>
+			</tr>
+			</table>
+			<a id="message"></a>
+			<br>
+			<button onclick="newGame()">New Game</button>
+			<button onclick="simpleGame()">Simple Game</button>
+			<br>
+			<br>
+			<br>
+		</div>
+		<div id='footer'>
+			<span>&copy; Copyright Angela Chen 2014</span>
+		</div>
+	</body>
+</html>
